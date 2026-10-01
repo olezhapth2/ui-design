@@ -678,9 +678,13 @@ function createGlassEngine(mount, opts) {
       if (r.mat.map) r.mat.map.offset.x = r.offset;
     });
     texTimer += dt;
-    if (hoverDirty || texTimer >= 1 / TEX_FPS) {
+    const scrolling = rowMeshes.some(
+      (r) => r.dragging || Math.abs(r.target - r.offset) * r.period > 12
+    );
+    if (!scrolling && (hoverDirty || texTimer >= 1 / TEX_FPS)) {
       texTimer = 0;
       hoverDirty = false;
+      const visSrcs = new Set();
       for (let ri = 0; ri < rowMeshes.length; ri++) {
         const r = rowMeshes[ri];
         let hi = -1;
@@ -697,7 +701,11 @@ function createGlassEngine(mount, opts) {
         }
         let dirty = false;
         for (let i = 0; i < r.cards.length; i++) {
-          const v = getMedia(r.cards[i].src);
+          const src = r.cards[i].src;
+          const v = getMedia(src);
+          let sx = r.xs[i] - r.offset * r.period;
+          sx = ((sx % r.period) + r.period) % r.period;
+          if (sx < W + 60 || sx > r.period - r.ws[i] - 60) visSrcs.add(src);
           const t = mediaTime(v);
           const base =
             W < 768
@@ -720,6 +728,15 @@ function createGlassEngine(mount, opts) {
           dirty = true;
         }
         if (dirty) r.tex.needsUpdate = true;
+      }
+      for (const src of activeSrcs) {
+        const m = mediaCache.get(src);
+        if (!m || isImg(m)) continue;
+        if (visSrcs.has(src)) {
+          if (m.paused) m.play().catch(() => {});
+        } else if (!m.paused) {
+          m.pause();
+        }
       }
     }
     uniforms.uTime.value = now * 1e-3;

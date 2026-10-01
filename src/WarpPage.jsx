@@ -83,13 +83,18 @@ const PROJECT_NAMES = [
   'PNB Agency', 'PNB', 'White Label', 'ShugarAi', 'GATE19', 'Gate19',
   'AdRider', 'DAOmars', 'TeamLead Siberia', 'WOW IMAGE',
 ];
-/* Ссылки проектов: показываем только адрес, без https:// */
+/* Ссылка проектов: показываем только адрес, без https:// */
 const PROJECT_URLS = {
   javhd: { url: 'https://olezhapth2.github.io/PRODUCT-DESIGNER/', label: 'olezhapth2.github.io/PRODUCT-DESIGNER' },
   gate19: { url: 'https://olezhapth2.github.io/PRODUCT-DESIGNER/', label: 'olezhapth2.github.io/PRODUCT-DESIGNER' },
   pnb: { url: 'https://pnb.agency', label: 'pnb.agency' },
   'pnb agency': { url: 'https://pnb.agency', label: 'pnb.agency' },
   miraitech: { url: 'https://miraitech.co', label: 'miraitech.co' },
+};
+/* Карточки без проекта → список проектов на od */
+const OD_PROJECTS = {
+  url: 'https://olezhapth2.github.io/od/#projects',
+  label: 'olezhapth2.github.io/od',
 };
 
 function detectProject(caption) {
@@ -314,7 +319,7 @@ export default function WarpPage() {
         const cardCaptions = CAPTIONS[panelState.id]?.[panelState.card.h];
         const caption = cardCaptions?.[lang] ?? cardCaptions?.ru;
         const proj = caption ? detectProject(caption) : null;
-        const link = proj ? PROJECT_URLS[proj.toLowerCase()] ?? null : null;
+        const link = proj ? PROJECT_URLS[proj.toLowerCase()] ?? null : OD_PROJECTS;
         return {
           title: proj ?? dir.title,
           link,
@@ -494,7 +499,7 @@ export default function WarpPage() {
           panelOpen={Boolean(panelState?.open)}
           panel={
             shownCardInfo ? (
-              <div>
+              <div key={lang}>
                 {shownCardInfo.link ? (
                   <a
                     href={shownCardInfo.link.url}

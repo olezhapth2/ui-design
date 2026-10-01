@@ -702,10 +702,10 @@ function createGlassEngine(mount, opts) {
           const base =
             W < 768
               ? ri === 0
-                ? 0.9
+                ? 1
                 : ri === 1
-                  ? 0.7
-                  : CARD_ALPHA
+                  ? 0.9
+                  : 0.8
               : ri <= 1
                 ? 0.9
                 : CARD_ALPHA;

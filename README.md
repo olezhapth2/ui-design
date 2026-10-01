@@ -53,7 +53,7 @@ src/
     captions.js        RU/EN caption per card
 public/
   motion/<gallery>/    media: mp4/jpg + .hd originals
-  cv*.html             CV pages ("Download CV")
+  Oleg-Devyatov-CV-*    CV PDFs ("Download CV")
 screenshots/           README images
 ```
 

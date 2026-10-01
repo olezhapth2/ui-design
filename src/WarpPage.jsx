@@ -113,15 +113,15 @@ function ProfilePanel({ lang }) {
     ru: {
       name: 'Девятов Олег Анатольевич',
       cv: 'Скачать CV',
-      cvFile: import.meta.env.BASE_URL + 'cv-ru.html',
-      download: 'Oleg-Devyatov-CV-RU.html',
+      cvFile: import.meta.env.BASE_URL + 'Oleg-Devyatov-CV-RU.pdf',
+      download: 'Oleg-Devyatov-CV-RU.pdf',
       write: 'Написать',
     },
     en: {
       name: 'Oleg Devyatov',
       cv: 'Download CV',
-      cvFile: import.meta.env.BASE_URL + 'cv-en.html',
-      download: 'Oleg-Devyatov-CV-EN.html',
+      cvFile: import.meta.env.BASE_URL + 'Oleg-Devyatov-CV-EN.pdf',
+      download: 'Oleg-Devyatov-CV-EN.pdf',
       write: 'Email me',
     },
   }[lang];
@@ -131,7 +131,7 @@ function ProfilePanel({ lang }) {
         {t.name}
       </p>
       <p className="mt-1 text-[12.5px] font-bold leading-snug text-zinc-300">
-        thaiolezha@gmail.com
+        olegdevyatow@gmail.com
       </p>
       <div className="mt-2.5 flex items-center gap-2">
         <a
@@ -142,7 +142,7 @@ function ProfilePanel({ lang }) {
           {t.cv}
         </a>
         <a
-          href="mailto:thaiolezha@gmail.com"
+          href="mailto:olegdevyatow@gmail.com"
           className={`${btn} border border-white/25 text-white hover:bg-white/10`}
         >
           {t.write}
@@ -216,8 +216,10 @@ export default function WarpPage() {
   const [switchSignal, setSwitchSignal] = useState(0);
   const [dip, setDip] = useState(false);
   const [cardView, setCardView] = useState(null);
-  const [lang, setLang] = useState('ru');
+  const [lang, setLang] = useState('en');
   const openedAtRef = useRef(0);
+  const swipeRef = useRef(null);
+  const swipedAtRef = useRef(0);
   const busyRef = useRef(false);
 
   useEffect(() => {
@@ -283,6 +285,15 @@ export default function WarpPage() {
     panelState?.open && !profileOpen
       ? SERVICES.find((service) => service.id === panelState.id) ?? null
       : null;
+
+  const stepCard = (dir) => {
+    const cards = GALLERIES.find((g) => g.id === activeId)?.cards ?? [];
+    const i = cards.findIndex((c) => c.h === cardView?.h);
+    if (i < 0 || !cards.length) return;
+    const next = cards[(i + dir + cards.length) % cards.length];
+    setCardView(next);
+    setPanelState({ id: activeId, open: true, card: next });
+  };
 
   const handleCard = (card) => {
     openedAtRef.current = performance.now();
@@ -388,7 +399,28 @@ export default function WarpPage() {
             className="fixed inset-0 z-[75] flex cursor-pointer items-center justify-center bg-black p-4 md:p-10"
             onClick={() => {
               if (performance.now() - openedAtRef.current < 400) return;
+              if (performance.now() - swipedAtRef.current < 500) return;
               setCardView(null);
+            }}
+            onTouchStart={(e) => {
+              const t = e.touches[0];
+              swipeRef.current = { x: t.clientX, y: t.clientY, dx: 0, dy: 0 };
+            }}
+            onTouchMove={(e) => {
+              const s0 = swipeRef.current;
+              if (!s0) return;
+              const t = e.touches[0];
+              s0.dx = t.clientX - s0.x;
+              s0.dy = t.clientY - s0.y;
+            }}
+            onTouchEnd={() => {
+              const s0 = swipeRef.current;
+              swipeRef.current = null;
+              if (!s0) return;
+              if (Math.abs(s0.dx) > 50 && Math.abs(s0.dx) > Math.abs(s0.dy) * 1.2) {
+                swipedAtRef.current = performance.now();
+                stepCard(s0.dx < 0 ? 1 : -1);
+              }
             }}
             role="presentation"
           >

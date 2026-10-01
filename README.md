@@ -5,7 +5,7 @@ full-screen gallery built around real project work.
 
 ![Desktop](screenshots/desktop.png)
 
-**Live demo:** https://gal-chi-blond.vercel.app
+**Live demo:** https://olezhapth2.github.io/ui-design/
 
 ## What's inside
 

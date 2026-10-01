@@ -113,14 +113,14 @@ function ProfilePanel({ lang }) {
     ru: {
       name: 'Девятов Олег Анатольевич',
       cv: 'Скачать CV',
-      cvFile: '/cv-ru.html',
+      cvFile: import.meta.env.BASE_URL + 'cv-ru.html',
       download: 'Oleg-Devyatov-CV-RU.html',
       write: 'Написать',
     },
     en: {
       name: 'Oleg Devyatov',
       cv: 'Download CV',
-      cvFile: '/cv-en.html',
+      cvFile: import.meta.env.BASE_URL + 'cv-en.html',
       download: 'Oleg-Devyatov-CV-EN.html',
       write: 'Email me',
     },

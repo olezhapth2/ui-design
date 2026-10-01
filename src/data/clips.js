@@ -81,3 +81,12 @@ export const CLIPS = {
     { h: "p18", src: "/motion/ui/p18.jpg", iw: 720, ih: 345, hd: "/motion/ui/p18.hd.jpg" },
   ],
 };
+
+/* Путы относительно base (GitHub Pages /ui-design/ и любой другой префикс) */
+const BASE = import.meta.env.BASE_URL;
+for (const gallery of Object.values(CLIPS)) {
+  for (const clip of gallery) {
+    clip.src = BASE + clip.src.slice(1);
+    if (clip.hd) clip.hd = BASE + clip.hd.slice(1);
+  }
+}

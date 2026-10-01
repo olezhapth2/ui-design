@@ -17,10 +17,10 @@ const IMG_RE = /\.(png|jpe?g|webp|gif)(\?|#|$)/i;
 const SERVICES = [
   {
     id: 'fidelity',
-    title: 'UX also',
+    title: 'UX',
     desc: {
-      ru: 'типографика, иерархия, плотность, адаптивы и доступность по WCAG. Тут глубина: JAVHD и Corgday, где каждый экран меряется конверсией или временем обработки.',
-      en: 'typography, hierarchy, density, responsive and WCAG accessibility. Depth here: JAVHD and Corgday, where every screen is measured by conversion or processing time.',
+      ru: 'Типографика, иерархия, плотность, адаптивы и доступность по WCAG. Основная глубина в JAVHD и Corgday, где каждый экран измеряется конверсией или временем обработки.',
+      en: 'Typography, hierarchy, density, responsive layouts and WCAG accessibility. Most depth is in JAVHD and Corgday, where every screen is measured by conversion or processing time.',
     },
     icon: <span>UX</span>,
   },
@@ -28,8 +28,8 @@ const SERVICES = [
     id: 'systems',
     title: 'System',
     desc: {
-      ru: 'Токены, компоненты в Figma, документация состояний и говернанс, чтобы системой пользовались, а не хранили в доке. 1 кодовая база, 20+ скинов, −60% времени на передачу макетов.',
-      en: 'Tokens, Figma components, state docs and governance: teams use the system instead of archiving it. 1 codebase, 20+ skins, −60% handoff time.',
+      ru: 'Токены, компоненты в Figma, документация состояний и governance, чтобы системой пользовались, а не хранили в доке. 1 кодовая база, 20+ скинов, −60% времени на передачу макетов.',
+      en: 'Tokens, Figma components, state docs and governance, so teams use the system instead of archiving it. 1 codebase, 20+ skins, −60% handoff time.',
     },
     icon: <Boxes />,
   },
@@ -37,8 +37,8 @@ const SERVICES = [
     id: 'motion',
     title: 'Motion',
     desc: {
-      ru: 'Интерактивные прототипы для проверки до вёрстки, микровзаимодействия и Smart Animate. Готовлю их, чтобы идею показали, а не описали: 300+ туров на геймификации.',
-      en: 'Interactive prototypes to validate before markup, micro-interactions and Smart Animate. I build them so the idea comes through in a prototype: 300+ runs on gamification.',
+      ru: 'Интерактивные прототипы для проверки до вёрстки: микровзаимодействия и Smart Animate. Идею показываю в действии, 300+ итераций на геймификации.',
+      en: 'Interactive prototypes to validate before development, with micro-interactions and Smart Animate. Ideas shown in action: 300+ gamification iterations.',
     },
     icon: <Sparkles />,
   },
@@ -46,14 +46,14 @@ const SERVICES = [
     id: 'qa',
     title: 'Metrics',
     desc: {
-      ru: 'Спеки готовые к разработке, парная с фронтом и ревью стейджинга попиксельно. Плюс вёрстка сам: связка Figma → Cursor/Claude Code → GitHub Pages.',
-      en: 'Specs ready for development, paired with frontend and pixel-level staging review. Plus markup myself: Figma → Cursor / Claude Code → GitHub Pages.',
+      ru: 'Спеки для разработки, парная работа с фронтом и попиксельный ревью стейджинга. Вёрстку делаю сам: Figma → Cursor / Claude Code → GitHub Pages.',
+      en: 'Dev-ready specs, pairing with frontend and pixel-level staging review. I also code layouts myself: Figma → Cursor / Claude Code → GitHub Pages.',
     },
     icon: <CheckCheck />,
   },
   {
     id: 'ai',
-    title: 'Ai Flow',
+    title: 'AI Flow',
     desc: {
       ru: 'Генеративные воркфлоу в ежедневной работе и дизайн AI-взаимодействий: чаты, адаптивные паттерны, human-in-the-loop. 3 года ежедневно, конвейер на n8n и 10 000+ креативов с ревью.',
       en: 'Generative workflows in daily work and AI interaction design: chats, adaptive patterns, human-in-the-loop. 3 years daily, an n8n pipeline and 10,000+ creatives with review.',
@@ -225,8 +225,8 @@ export default function WarpPage() {
   useEffect(() => {
     document.title =
       lang === 'ru'
-        ? 'Олег Девятов — UI дизайнер'
-        : 'Oleg Devyatov — UI Designer';
+        ? 'Олег Девятов: Senior Product Designer'
+        : 'Oleg Devyatov: Senior Product Designer';
     document.documentElement.lang = lang;
   }, [lang]);
 
@@ -307,8 +307,8 @@ export default function WarpPage() {
           SERVICES.find((service) => service.id === panelState.id) ?? {
             title: 'UI',
             desc: {
-              ru: 'Интерфейсные экраны, макеты и редизайн-наработки.',
-              en: 'Interface screens, layouts and redesign work.',
+              ru: 'Интерфейсные экраны, макеты и редизайн-проекты.',
+              en: 'Interface screens, layouts and redesign projects.',
             },
           };
         const cardCaptions = CAPTIONS[panelState.id]?.[panelState.card.h];
